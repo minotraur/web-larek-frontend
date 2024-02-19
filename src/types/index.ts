@@ -35,30 +35,25 @@ export interface IOrderResult {
 	id: string;
 }
 
-export interface IPageModel {
+export interface IPageView {
 	counter: number;
 	catalog: HTMLElement[];
-	loadProdusts(): void;
-	onClick(): void;
 }
 
-export interface ICardModel {
+export interface ICardView {
 	description: string;
 	image: string;
 	title: string;
 	category: string;
 	price: number;
-	onClick(): void;
 }
 
-export interface IBasketModel {
+export interface IBasketView {
 	products: HTMLElement[];
 	total: number;
-	deleteProduct(): void;
-	onClick(): void;
 }
 
-export interface IModalModel {
+export interface IModalView {
 	content: HTMLElement;
 	open(): void;
 	close(): void;
