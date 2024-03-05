@@ -1,15 +1,3 @@
-export interface IAppState {
-	catalog: IProduct[];
-	basket: string[];
-	preview: string;
-	order: IOrder;
-}
-
-export interface IFormState {
-	valid: boolean;
-	errors: string[];
-}
-
 export interface IProduct {
 	id: string;
 	description: string;
@@ -19,42 +7,23 @@ export interface IProduct {
 	price: number | null;
 }
 
-export interface IOrderForm {
-	payment: string;
-	address: string;
-	email: string;
-	phone: string;
+export interface IBasket {
+	items: IProduct[];
+	total: number;
 }
 
 export interface IOrder {
+	payment: 'cash' | 'card';
+	email: string;
+	phone: string;
+	address: string;
+	items: string[];
 	total: number;
-	items: IOrderForm[];
 }
+
+export type OrderForm = Omit<IOrder, 'total' | 'items'>;
 
 export interface IOrderResult {
 	id: string;
-}
-
-export interface IPageView {
-	counter: number;
-	catalog: HTMLElement[];
-}
-
-export interface ICardView {
-	description: string;
-	image: string;
-	title: string;
-	category: string;
-	price: number;
-}
-
-export interface IBasketView {
-	products: HTMLElement[];
 	total: number;
-}
-
-export interface IModalView {
-	content: HTMLElement;
-	open(): void;
-	close(): void;
 }
