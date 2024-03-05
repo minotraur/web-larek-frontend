@@ -1,9 +1,9 @@
-import { IOrder } from '../types';
-import { ensureElement } from '../utils/utils';
-import { EventEmitter } from './base/events';
 import { Form } from './common/Form';
+import { OrderForm, PaymentMethod } from '../types';
+import { EventEmitter } from './base/events';
+import { ensureElement } from '../utils/utils';
 
-export class Order extends Form<IOrder> {
+export class Order extends Form<OrderForm> {
 	protected _paymentCard: HTMLButtonElement;
 	protected _paymentCash: HTMLButtonElement;
 
@@ -11,30 +11,32 @@ export class Order extends Form<IOrder> {
 		super(container, events);
 
 		this._paymentCard = ensureElement<HTMLButtonElement>(
-			'.button[name=card]',
-			container
+			'.button_alt[name=card]',
+			this.container
 		);
 		this._paymentCash = ensureElement<HTMLButtonElement>(
-			'.button[name=cash]',
-			container
+			'.button_alt[name=cash]',
+			this.container
 		);
 
 		this._paymentCard.addEventListener('click', () => {
-			this.events.emit('cardPayment:select');
-			console.log('card');
+			this.payment = 'card';
+			this.onInputChange('payment', 'card');
 		});
-		this._paymentCash.addEventListener('click', () => {
-			this.events.emit('cashPayment:select');
-		});
-	}
 
-	set payment(value: string) {
-		(this.container.elements.namedItem(value) as HTMLButtonElement).value =
-			value;
+		this._paymentCash.addEventListener('click', () => {
+			this.payment = 'cash';
+			this.onInputChange('payment', 'cash');
+		});
 	}
 
 	set address(value: string) {
 		(this.container.elements.namedItem('address') as HTMLInputElement).value =
 			value;
+	}
+
+	set payment(value: PaymentMethod) {
+		this._paymentCard.classList.toggle('button_alt-active', value === 'card');
+		this._paymentCash.classList.toggle('button_alt-active', value === 'cash');
 	}
 }

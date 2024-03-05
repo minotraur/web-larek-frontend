@@ -8,12 +8,14 @@ export interface IProduct {
 }
 
 export interface IBasket {
-	items: IProduct[];
+	items: string[];
 	total: number;
 }
 
+export type PaymentMethod = 'cash' | 'card';
+
 export interface IOrder {
-	payment: 'cash' | 'card';
+	payment: PaymentMethod;
 	email: string;
 	phone: string;
 	address: string;

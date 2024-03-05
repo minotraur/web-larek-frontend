@@ -25,16 +25,10 @@ export class Page extends View<IPage> {
 		this._basket.addEventListener('click', () => {
 			this.events.emit('basket:open');
 		});
-
-		this.counter = 0;
 	}
 
 	set counter(value: number) {
 		this.setText(this._counter, String(value));
-	}
-
-	get counter(): number {
-		return +this._counter.textContent;
 	}
 
 	set catalog(items: HTMLElement[]) {

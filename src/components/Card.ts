@@ -14,16 +14,23 @@ export class Card extends Component<IProduct> {
 	protected _price: HTMLElement;
 	protected _button?: HTMLButtonElement;
 
+	protected _categoryColor = new Map<string, string>([
+		['софт-скил', '_soft'],
+		['другое', '_other'],
+		['дополнительное', '_additional'],
+		['кнопка', '_button'],
+		['хард-скил', '_hard'],
+	]);
+
 	constructor(container: HTMLElement, actions?: ICardActions) {
 		super(container);
 
-		this._category = container.querySelector(`.card__category`);
-
 		this._title = ensureElement<HTMLElement>('.card__title', container);
-		this._image = container.querySelector(`.card__image`);
-
-		this._description = container.querySelector(`.card__description`);
 		this._price = ensureElement<HTMLElement>('.card__price', container);
+
+		this._category = container.querySelector(`.card__category`);
+		this._image = container.querySelector(`.card__image`);
+		this._description = container.querySelector(`.card__description`);
 		this._button = container.querySelector(`.card__button`);
 
 		if (actions?.onClick) {
@@ -61,9 +68,13 @@ export class Card extends Component<IProduct> {
 
 	set price(value: string) {
 		if (value) {
-			this.setText(this._price, value + ' синапсов');
+			this.setText(this._price, `${value} синапсов`);
 		} else {
 			this.setText(this._price, 'Бесценно');
+		}
+
+		if (this._button) {
+			this._button.disabled = !value;
 		}
 	}
 
@@ -73,9 +84,18 @@ export class Card extends Component<IProduct> {
 
 	set category(value: string) {
 		this.setText(this._category, value);
+		this._category?.classList?.remove('card__category_soft');
+		this._category?.classList?.remove('card__category_other');
+		this._category?.classList?.add(
+			`card__category${this._categoryColor.get(value)}`
+		);
 	}
 
 	set description(value: string) {
 		this.setText(this._description, value);
+	}
+
+	set button(value: string) {
+		this.setText(this._button, value);
 	}
 }
