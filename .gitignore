@@ -5,3 +5,4 @@ dist
 .idea
 .vscode
 *.log
+.$architecture.drawio.bkp
