@@ -157,10 +157,10 @@ events.on('contacts:submit', () => {
 			const success = new Success(cloneTemplate(successTemplate), {
 				onClick: () => {
 					modal.close();
-					appData.clearBasket();
-					events.emit('basket:change');
 				},
 			});
+			appData.clearBasket();
+			events.emit('basket:change');
 			modal.render({
 				content: success.render({ total: appData.order.total }),
 			});
