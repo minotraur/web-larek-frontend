@@ -73,9 +73,16 @@ export class AppData {
 	validateOrder() {
 		const errors: typeof this.formErrors = {};
 
+		const email_regex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z0-9_-]+)/;
+
 		if (!this.order.email) {
 			errors.email = 'Необходимо указать email';
 		}
+
+		if (!email_regex.test(this.order.email)) {
+			errors.email = 'Необходимо указать корректный email';
+		}
+
 		if (!this.order.phone) {
 			errors.phone = 'Необходимо указать телефон';
 		}
